@@ -1,0 +1,25 @@
+<p>글쓰기와 리스트가 동시에 노출되어야 합니다.</p>
+<section>
+  <div>
+    <form method='POST'>
+      {% csrf_token %}
+      <table>
+        {{form.as_table}} 
+      </table>
+      <button type="submit">작성</button>
+    </form>
+  </div>
+</section>
+
+<section>
+  <div>
+    <h2>READ</h2>
+    {% for posts in posts.all %}
+    <p>제목 :<a href="{% url 'detail' posts.id %}">{{ posts.title }}</a></p>
+    <p>작성 일지 및 시간 : {{ posts.pub_date }}</p>
+    <a href="{% url 'edit' posts.id %}">수정하기</a>
+    <a href="{% url 'delete' posts.id %}">삭제하기</a>
+    {% endfor %}
+  </div>
+
+</section>

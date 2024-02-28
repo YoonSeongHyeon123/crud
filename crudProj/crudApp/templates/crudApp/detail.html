@@ -1,0 +1,22 @@
+<section>
+  <div>
+    <h2>제목 : {{post.title}}</h2>
+    <p>작성 일자 및 시간 : {{ post.pub_date }}</p>
+    <p>내용 : {{ post.body }}</p>
+    <a href = "{% url 'edit' post.id %}">수정하기</a>
+    <a href = "{% url 'delete' post.id %}">삭제하기</a>
+  </div>
+</section>
+
+<section>
+  <form method="POST" action='/comment/{{ post.id }}'>
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <input type="submit">
+  </form>
+
+  {% for comment in post.comments.all %}
+    <p>{{ comment.text }}</p>
+  {% endfor %}
+
+</section>

@@ -1,0 +1,12 @@
+<section>
+  <div>
+    <h2>READ</h2>
+    {% for posts in posts.all %}
+    <p>제목 :<a href="{% url 'detail' posts.id %}">{{ posts.title }}</a></p>
+    <p>작성 일지 및 시간 : {{ posts.pub_date }}</p>
+    {% endfor %}
+  </div>
+
+
+</section>
+

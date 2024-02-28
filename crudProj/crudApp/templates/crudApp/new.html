@@ -1,0 +1,11 @@
+<section>
+  <div>
+    <form method='POST'>
+      {% csrf_token %}
+      <table>
+        {{form.as_table}} 
+      </table>
+      <button type="submit">작성</button>
+    </form>
+  </div>
+</section>
