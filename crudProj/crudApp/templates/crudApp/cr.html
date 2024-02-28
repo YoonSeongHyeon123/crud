@@ -23,3 +23,11 @@
   </div>
 
 </section>
+
+<section>
+  <span>
+    {% for hashtag in post.hashtags.all %}
+      {{ hashtag.name }}
+    {% endfor %}
+  </span>
+</section>

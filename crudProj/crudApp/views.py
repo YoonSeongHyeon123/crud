@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, HashtagForm
 from django.utils import timezone
-from .models import Post
+from .models import Post, Hashtag
 
 # 메인페이지
 def main(request):
@@ -84,6 +84,24 @@ def cr(request):
       form = form.save(commit=False)
       form.pub_date = timezone.now()
       form.save()
+
+      hashtag_field = form.cleaned_data['hashtag_field']
+      str_hashtags = hashtag_field.split('#')
+      list_hashtags = list()
+
+      for hashtag in str_hashtags:
+        if Hashtag.objects.filter(name=hashtag):
+          list_hashtags.append(Hashtag.objects.get(name=hashtag))
+        
+        else:
+          temp_hashtag = HashtagForm().save(commit=False)
+          temp_hashtag.name = hashtag
+          temp_hashtag.save()
+          list_hashtags.append(temp_hashtag)
+
+      form.save()
+      form.hashtags.add(*list_hashtags)
+
       return render(request, 'crudApp/cr.html', {'posts':posts, 'comment_form': comment_form})
   
   else:
